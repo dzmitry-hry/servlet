@@ -1,27 +1,19 @@
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import weather.WeatherService;
-import weather.WeatherServiceEngine;
-import weather.WeatherServiceRequest;
-import weather.WeatherServiceResponse;
-import weather.exception.BadInputException;
+import weather.WeatherRunner;
+import weather.app.WeatherServiceManager;
+import weather.core.entity.WeatherShot;
 
 import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.Scanner;
+import java.util.List;
 
 @WebServlet("/weather")
-public class ServiceServlet extends HttpServlet {
-
-    private WeatherService weatherService;
-
+public class GetWeatherServlet extends HttpServlet {
     //http://localhost:8080/weather?location=47.6088285,-122.5046043
     //http://localhost:8080/weather?location=Oslo
     //http://localhost:8080/weather?location=Sidney
@@ -29,8 +21,11 @@ public class ServiceServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String location = req.getParameter("location");
-        WeatherService service = WeatherServiceOwm.getInstance();
-        String jsonString = (String) service.weatherByLocation(location);
+        WeatherServiceManager weatherServiceManager = WeatherRunner.getInstance();
+        List<WeatherShot> weatherShotList = weatherServiceManager.getWeather(location);
+        Gson gson = new Gson();
+        gson.toJson(weatherShotList);
+        String jsonString = gson.toJson(weatherShotList);
         resp.setContentType("application/json");
         PrintWriter out = resp.getWriter();
         out.print(jsonString);

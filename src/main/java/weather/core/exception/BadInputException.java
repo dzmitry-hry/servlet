@@ -1,4 +1,4 @@
-package weather.exception;
+package weather.core.exception;
 
 public class BadInputException extends Exception{
 public BadInputException(){

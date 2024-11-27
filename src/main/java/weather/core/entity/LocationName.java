@@ -1,4 +1,4 @@
-package weather.entity;
+package weather.core.entity;
 
 public class LocationName {
     private final String name;

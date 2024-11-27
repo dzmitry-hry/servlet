@@ -1,17 +1,17 @@
-package weather;
+package weather.core;
 
-import weather.entity.LocationCoord;
-import weather.entity.LocationName;
-import weather.exception.BadInputException;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import weather.core.entity.Location;
+import weather.core.entity.LocationCoord;
+import weather.core.entity.LocationName;
 
 
 /*
 * Data Object for passing user request to weather service
 * */
 public class WeatherServiceRequest {
+
+    Location location;
+/*
     LocationName name;
     LocationCoord coord;
 
@@ -22,7 +22,10 @@ public class WeatherServiceRequest {
     public WeatherServiceRequest(LocationCoord coord) {
         this.coord = coord;
     }
-
+*/
+    public WeatherServiceRequest(Location location) {
+        this.location = location;
+    }
 
 
 
